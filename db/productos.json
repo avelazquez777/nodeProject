@@ -1,17 +1,27 @@
 [
   {
-    "id": 1,
-    "nombre": "Teclado mecánico",
-    "precio": 12000
-  },
-  {
-    "id": 2,
-    "nombre": "Mouse",
-    "precio": 50000
-  },
-  {
-    "nombre": "Teclado retroiluminado",
-    "precio": 12000,
+    "nombre": "444",
+    "precio": 22,
     "id": 3
+  },
+  {
+    "nombre": "333",
+    "precio": 44422,
+    "id": 4
+  },
+  {
+    "nombre": "ll",
+    "precio": 7723,
+    "id": 5
+  },
+  {
+    "nombre": "444",
+    "precio": 555555,
+    "id": 6
+  },
+  {
+    "nombre": "3223",
+    "precio": 422,
+    "id": 7
   }
 ]

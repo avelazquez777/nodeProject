@@ -19,18 +19,19 @@ const escribirUsers = (users) => {
 
 const createUser = (req, res) => {
   const nuevoUser = req.body;
-
-  if (!nuevoUser.nombre || !nuevoUser.email || !nuevoUser.edad) {
-    return res.status(400).json({ status: 400, message: "Faltan campos obligatorios" });
-  }
-
-  nuevoUser.id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+  
+  const maxId = users.reduce((max, prod) => prod.id > max ? prod.id : max, 0);
+  nuevoUser.id = maxId + 1;
+  
   users.push(nuevoUser);
   escribirUsers(users);
-
-  res.status(201).json({ data: nuevoUser, status: 201, message: "Usuario creado de forma exitosa" });
-};
-
+  
+  res.status(201).json({
+    data: nuevoUser,
+    status: 201,
+    message: "Usuario creado de forma exitosa"
+  });
+}
 
 const getUser = (req, res) => {
   res.json({ data: users, status: 200, message: "Usuarios obtenidos de forma exitosa" });

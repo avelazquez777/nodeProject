@@ -17,13 +17,21 @@ const escribirProductos = (productos) => {
 
 
 const createProduct = (req, res) => {
-    const nuevoProducto = req.body
-    nuevoProducto.id = productos.length + 1
-    productos.push(nuevoProducto)
-    escribirProductos(productos)
-    res.status(201).json({ data: nuevoProducto, status: 201, message: "Producto creado de forma exitosa" })
-  }
+  const nuevoProducto = req.body;
   
+  const maxId = productos.reduce((max, prod) => prod.id > max ? prod.id : max, 0);
+  nuevoProducto.id = maxId + 1;
+  
+  productos.push(nuevoProducto);
+  escribirProductos(productos);
+  
+  res.status(201).json({
+    data: nuevoProducto,
+    status: 201,
+    message: "Producto creado de forma exitosa"
+  });
+}
+
 const getProduct = (req, res) => {
     res.json({ data: productos, status: 200, message: "Productos obtenidos de forma exitosa" })
   }
@@ -58,18 +66,21 @@ const getElementById =  (req, res) => {
   
   
   
-const deleteProduct = (req, res) => {
-      let producto = productos.find(item => item.id === parseInt(req.params.id))
-      if (!producto) {
-        return res.status(404).json({ status: 404, message: "Producto no encontrado" })
-      }  
-      productos = productos.filter(item => item.id === parseInt(req.params.id))
-      
-      escribirProductos(productos)
-
-      res.json({ data: producto, status: 201, message: "Producto eliminado de forma exitosa" })
+  const deleteProduct = (req, res) => {
+    const id = parseInt(req.params.id, 10);
+    const producto = productos.find(item => item.id === id);
   
+    if (!producto) {
+      return res.status(404).json({ status: 404, message: "Producto no encontrado" });
+    }
+    productos = productos.filter(item => item.id !== id);
+    escribirProductos(productos);
+  
+    console.log('Producto eliminado:', producto);
+  
+    res.json({ data: producto, status: 201, message: "Producto eliminado de forma exitosa" });
   }
+  
 
 
   module.exports = {
